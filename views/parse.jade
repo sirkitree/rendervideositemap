@@ -5,5 +5,5 @@ block content
   div.gallery.cf
     each v in videolist
         div.video-wrapper
-            a(href="#{v.player_loc}", title="#{v.title}", class="popup-video")
+            a(href="#{v.player_loc || v.content_loc}", title="#{v.title}", class="popup-video")
                 img(src="/images/loading.gif", data-src="#{v.thumbnail_loc}", alt="#{v.title}", class="b-lazy img-tipso", data-tipso-title="#{v.title}", data-tipso="#{v.description}")

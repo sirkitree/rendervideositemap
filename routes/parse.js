@@ -4,18 +4,22 @@ var router = express.Router();
 var parse = require('xml-parser');
 var request = require('request');
 
-// Experimenting w/ client sitemaps
-var url = 'http://www.bravotv.com/sitemap.xml?page=1';
+// Tiem to start assembling data to send to parse.jade template
+router.get('/', function(req, res, next) {
+    /**
+     * Exmaple video sitemaps:
+     *   http://www.bravotv.com/sitemap.xml?page=1 (default)
+     *   https://www.thestreet.com/sitemap_video2016Jul.xml
+     */ 
+    var sitemap = (req.query.sitemap ? req.query.sitemap : 'http://www.bravotv.com/sitemap.xml?page=1');
 
-// @todo - use fs to store XML file locally
-request.get(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-        // var inspect = require('util').inspect;
-        var obj = parse(body);
-    }
+    // @todo - use fs to store XML file locally
+    request.get(sitemap, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            // var inspect = require('util').inspect;
+            var obj = parse(body);
+        }
 
-    // Tiem to start assembling data to send to parse.jade template
-    router.get('/', function(req, res, next) {
         if (obj.root.children) {
             var videos = [];
             var items = [];
@@ -33,7 +37,7 @@ request.get(url, function (error, response, body) {
                         // Loop through all attributes of each video
                         record.children.forEach(function(meta) {
                             // For now these are the only fields we want to display.
-                            var fields = ['title', 'duration', 'description', 'publication_date', 'thumbnail_loc', 'player_loc', 'restriction', 'tvshow'];
+                            var fields = ['title', 'duration', 'description', 'publication_date', 'thumbnail_loc', 'player_loc', 'restriction', 'tvshow', 'content_loc'];
 
                             // Attribute names all being with 'video:' we need to strip that out
                             // to match the fields above.
@@ -52,7 +56,7 @@ request.get(url, function (error, response, body) {
 
             // Call the parse.jade template. 
             // Provide a page title and all the video items we found
-            res.render('parse', { title: 'bravoTypeApp', videolist: videos });
+            res.render('parse', { title: 'Thanks for the Video Sitemap!', videolist: videos });
             return;
         }
 

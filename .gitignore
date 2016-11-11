@@ -29,7 +29,6 @@ pids
 logs
 results
 build
-bin
 
 # Coveralls
 coverage
