@@ -6,6 +6,7 @@ html
     meta(name='description', content= title)
     script(src='/javascripts/aframe.min.js')
     script(src='/javascripts/aframe-video-controls.min.js')
+    script(src='/javascripts/aframe-bmfont-text-component.min.js')
   body
     a-scene
       a-assets
@@ -28,9 +29,28 @@ html
 
       //- Title Box (top left)
       a-plane(color='#000', opacity='0.9', height='3.5', width='5.9', position='-10.5 8.2 -7', rotation='0 5 0')
+      a-entity(bmfont-text='text: VIDEO TITLE PLACEHOLDER', align='center', width='5.9', position='-12.1 8.9 -6', rotation='0 5 0')
 
       //- Description Box (bottom left)
       a-plane(color='#000', opacity='0.9', height='5.8', width='5.9', position='-10.5 3.2 -7', rotation='0 5 0')
+      a-entity(bmfont-text='text: PUBLICATION DATE PLACEHOLDER', align='center', width='5.9', position='-12.1 5.3 -6', rotation='0 5 0')
+      a-entity(bmfont-text='text: DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER ', align='center', width='5.9', position='-12.1 4.2 -6', rotation='0 5 0')
 
       //- Video Browser (right)
       a-plane(color='#000', opacity='0.9', height='9.75', width='5.9', position='10.5 5.1 -7', rotation='0 -5 0')
+      a-entity(bmfont-text='text: UP NEXT', align='center', width='5.9', position='7.25 8.75 -6', rotation='0 -5 0')
+      //- Video Element @todo turn this into a mixin
+      a-plane(color='#FFF', height='1.4', width='2.1', position='8.25 7.75 -6', rotation='0 -5 0')
+      a-entity(bmfont-text='text: PLACEHOLDER FOR VIDEO DESCRIPTION HERE', align='left', width='2.5', position='9.75 8.25 -6', rotation='0 -5 0')
+
+      //- Repeat Video Elements for prototyping
+      a-plane(color='#FFF', height='1.4', width='2.1', position='8.25 5.75 -6', rotation='0 -5 0')
+      a-entity(bmfont-text='text: PLACEHOLDER FOR VIDEO DESCRIPTION HERE', align='left', width='2.5', position='9.75 6.25 -6', rotation='0 -5 0')
+
+      //- Repeat Video Elements for prototyping
+      a-plane(color='#FFF', height='1.4', width='2.1', position='8.25 3.75 -6', rotation='0 -5 0')
+      a-entity(bmfont-text='text: PLACEHOLDER FOR VIDEO DESCRIPTION HERE', align='left', width='2.5', position='9.75 4.25 -6', rotation='0 -5 0')
+
+      //- Repeat Video Elements for prototyping
+      a-plane(color='#FFF', height='1.4', width='2.1', position='8.25 1.75 -6', rotation='0 -5 0')
+      a-entity(bmfont-text='text: PLACEHOLDER FOR VIDEO DESCRIPTION HERE', align='left', width='2.5', position='9.75 2.25 -6', rotation='0 -5 0')
