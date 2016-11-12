@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title= title
+    meta(name='description', content= title)
+    script(src='/javascripts/aframe.min.js')
+    script(src='/javascripts/aframe-video-controls.min.js')
+  body
+    a-scene
+      a-assets
+        video#video_1(src='http://vid.thestreet.com/p/105/sp/10500/serveFlavor/entryId/0_vis063pe/v/2/flavorId/0_e2l2nqf6/video.mp4')
+      a-entity(camera='', position='0 1.7 7.5', look-controls='enabled: true', wasd-controls='enabled: false')
+        a-cursor#cursor(color='red')
+      a-sky(src='/images/nightsky.jpg', color='dark-grey')
+      a-video(src='#video_1', autoplay='true', width='19', height='11', position='0 5.5 -8')
+      a-entity(video-controls='src:#video_1', size='10.0', distance='3.0')
