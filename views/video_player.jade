@@ -9,9 +9,28 @@ html
   body
     a-scene
       a-assets
+        //- @todo load multiple video urls from feed
         video#video_1(src='http://vid.thestreet.com/p/105/sp/10500/serveFlavor/entryId/0_vis063pe/v/2/flavorId/0_e2l2nqf6/video.mp4')
+        //- @todo load multiple video assets like thumbnails and descriptions from feed
+        //- maybe load them as attributes for video assets above instead of separate assets?
+      
+      //- Fixed camera to lock in the user experience
       a-entity(camera='', position='0 1.7 7.5', look-controls='enabled: true', wasd-controls='enabled: false')
+        //- Need cursor so you know where to look and interact with video player controls and select other videos
         a-cursor#cursor(color='red')
-      a-sky(src='/images/nightsky.jpg', color='dark-grey')
+
+      //- Nice image adds some eye candy to the experience. Not needed but scene is boring without it
+      a-sky(src='/images/nightsky.jpg')
+
+      //- Video Player Screen and Controls
       a-video(src='#video_1', autoplay='true', width='19', height='11', position='0 5.5 -8')
       a-entity(video-controls='src:#video_1', size='10.0', distance='3.0')
+
+      //- Title Box (top left)
+      a-plane(color='#000', opacity='0.9', height='3.5', width='5.9', position='-10.5 8.2 -7', rotation='0 5 0')
+
+      //- Description Box (bottom left)
+      a-plane(color='#000', opacity='0.9', height='5.8', width='5.9', position='-10.5 3.2 -7', rotation='0 5 0')
+
+      //- Video Browser (right)
+      a-plane(color='#000', opacity='0.9', height='9.75', width='5.9', position='10.5 5.1 -7', rotation='0 -5 0')
