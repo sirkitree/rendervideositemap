@@ -8,8 +8,8 @@ var request = require('request');
 router.get('/', function(req, res, next) {
     /**
      * Exmaple video sitemaps:
-     *   http://www.bravotv.com/sitemap.xml?page=1 (default)
-     *   https://www.thestreet.com/sitemap_video2016Jul.xml
+     *   http://www.bravotv.com/sitemap.xml?page=1
+     *   https://www.thestreet.com/sitemap_video2016Jul.xml (default)
      */ 
     var sitemap = (req.query.sitemap ? req.query.sitemap : 'https://www.thestreet.com/sitemap_video2016Jul.xml');
     var template = (req.query.template ? req.query.template : 'parse');
