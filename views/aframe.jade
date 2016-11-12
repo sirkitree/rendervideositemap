@@ -58,7 +58,8 @@ html
           -var textpos = 8.25-(count * 2)
           -var thumbpos = textpos-.5
           //- Video Element @todo turn this into a mixin
-          a-entity(videopreview data-video-id="#{count}")
+          a-entity(videopreview, class="video-preview", data-video-id="#{count}")
             a-entity(bmfont-text='PLACEHOLDER VIDEO TITLE', class='hover-ui', align='left', position='9.75 #{textpos} -6', rotation='0 -5 0')
             a-image(src='#image_' + count, class='hover-ui', opacity='0.9', height='1.4', width='2.1', position="8.25 #{thumbpos} -6", rotation='0 -5 0', color='#FFF')
           - count++
+          

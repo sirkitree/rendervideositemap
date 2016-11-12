@@ -5,16 +5,22 @@ document.querySelectorAll('.hover-ui').forEach(function() {
   var boxes = d3.selectAll('.hover-ui');
 
   this.addEventListener('mouseenter', function () {
-    console.log("enter");
     boxes.transition()
               .duration(1000)
               .attr('opacity', dark);
   });
   
   this.addEventListener('mouseleave', function () {
-    console.log("leave");
     boxes.transition()
               .duration(1000)
               .attr('opacity', light);
   });
 });
+
+document.querySelectorAll('.video-preview').forEach(function() {
+  console.log(this);
+  this.addEventListener('click', function(el) {
+    console.log(el);
+  });
+});
+
