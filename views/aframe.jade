@@ -1,0 +1,61 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title= title
+    meta(name='description', content= title)
+    script(src='/javascripts/aframe.min.js')
+    script(src='/javascripts/aframe-video-controls.min.js')
+    script(src='/javascripts/aframe-bmfont-text-component.min.js')
+  body
+    a-scene
+      a-assets
+        -var index = 0
+        each v in videolist
+          if index < 4
+            //- @todo load multiple video urls from feed
+            image(id="image_#{index}", src="#{v.thumbnail_loc}")
+            video(id="video_#{index++}", src="#{v.player_loc || v.content_loc}", data-title="#{v.title}", data-description="#{v.description}", data-pubdate="#{v.publication_date}", data-thumbnail="#{v.thumbnail_loc}")
+            //- @todo load multiple video assets like thumbnails and descriptions from feed
+            //- maybe load them as attributes for video assets above instead of separate assets?
+      
+      //- Fixed camera to lock in the user experience
+      a-entity(camera, position='0 1.7 7.5', look-controls='enabled: true', wasd-controls='enabled: false')
+        //- Need cursor so you know where to look and interact with video player controls and select other videos
+        a-cursor#cursor(color='red')
+
+      //- Nice image adds some eye candy to the experience. Not needed but scene is boring without it
+      a-sky(src='/images/nightsky.jpg')
+
+      //- Branding (above player)
+      a-entity(bmfont-text="text: #{title}", position='-1 6.5 0')
+
+      //- Video Player Screen and Controls
+      a-video(src='#video_1', autoplay='true', width='19', height='11', position='0 5.5 -8')
+      a-entity(video-controls='src:#video_1')
+
+      //- Title Box (top left)
+      a-plane(id="title-box", class="box", color='#000', opacity='0.9', height='3.5', width='5.9', position='-10.5 8.2 -7', rotation='0 5 0')
+      a-entity(bmfont-text="text: PLACEHOLDER VIDEO TITLE", align='center', width='5.9', position='-12.1 8.9 -6', rotation='0 5 0')
+
+      //- Description Box (bottom left)
+      a-plane(id="description-box", class="box", color='#000', opacity='0.9', height='5.8', width='5.9', position='-10.5 3.2 -7', rotation='0 5 0')
+      a-entity(bmfont-text='text: PUBLICATION DATE PLACEHOLDER', align='center', width='5.9', position='-12.1 5.3 -6', rotation='0 5 0')
+      a-entity(bmfont-text='text: DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER DESCRIPTION PLACEHOLDER ', align='center', width='5.9', position='-12.1 4.2 -6', rotation='0 5 0')
+
+      //- Video Browser (right)
+      a-plane(id="video-browser", class="box", color='#000', opacity='0.9', height='9.75', width='5.9', position='10.5 5.1 -7', rotation='0 -5 0')
+      a-entity(bmfont-text='text: UP NEXT', align='center', width='5.9', position='7.25 8.75 -6', rotation='0 -5 0')
+      
+      //- For now just render the 4 that are visible in viewing area
+      -var count = 0
+      each v in videolist
+        if count < 4
+          -var textpos = 8.25-(count * 2)
+          -var thumbpos = textpos-.5
+          //- Video Element @todo turn this into a mixin
+          a-entity(videopreview data-video-id="#{count}")
+            a-entity(bmfont-text="PLACEHOLDER VIDEO TITLE", align='left', position='9.75 #{textpos} -6', rotation='0 -5 0')
+            //- @todo if image isn't 
+            a-image(src='#image_' + count, height='1.4', width='2.1', position="8.25 #{thumbpos} -6", rotation='0 -5 0')
+          - count++

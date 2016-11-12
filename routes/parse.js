@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
      *   http://www.bravotv.com/sitemap.xml?page=1 (default)
      *   https://www.thestreet.com/sitemap_video2016Jul.xml
      */ 
-    var sitemap = (req.query.sitemap ? req.query.sitemap : 'http://www.bravotv.com/sitemap.xml?page=1');
+    var sitemap = (req.query.sitemap ? req.query.sitemap : 'https://www.thestreet.com/sitemap_video2016Jul.xml');
+    var template = (req.query.template ? req.query.template : 'parse');
 
     // @todo - use fs to store XML file locally
     request.get(sitemap, function (error, response, body) {
@@ -56,7 +57,7 @@ router.get('/', function(req, res, next) {
 
             // Call the parse.jade template. 
             // Provide a page title and all the video items we found
-            res.render('parse', { title: 'Thanks for the Video Sitemap!', videolist: videos });
+            res.render(template, { title: 'Sitemap Video Player', videolist: videos });
             return;
         }
 
