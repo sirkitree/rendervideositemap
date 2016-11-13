@@ -21,6 +21,7 @@
     "moment": "^2.16.0",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
+    "start": "^4.0.2",
     "striptags": "^2.1.1",
     "xml-parser": "^1.2.1"
   },
