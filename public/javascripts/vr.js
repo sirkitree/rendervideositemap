@@ -5,17 +5,12 @@ $(function() {
 
    // Increase opacity for all menu-panes individually
   document.querySelectorAll('.hover-ui').forEach(function(el) {
-
     el.addEventListener('mouseenter', function () {
-      boxes.transition()
-        .duration(1000)
-        .attr('opacity', dark);
+      focusUI();
     });
     
     el.addEventListener('mouseleave', function () {
-      boxes.transition()
-        .duration(1000)
-        .attr('opacity', light);
+      fadeUI();
     });
   });
 
@@ -29,25 +24,30 @@ $(function() {
       if (vidId > -1) {
         var currentVid = $('#video-player').attr('src');
         var newVid = $('#video-' + vidId);
-        var elements = dynamicElements(vidId);
+        var elements = getElements(vidId);
         
         stopVideo(currentVid);
-        updateElements(elements, newVid);
+        setElements(elements, newVid);
         playVideo(newVid);
       }
     });
   });
   
   // These are all the tags and attributes which need to be swapped.
-  function dynamicElements(id) {
+  function getElements(id) {
     return {
       video_player: {
         attribute: 'src', 
         prefix: '#video-' + id
       },
       // video_controller: {
-      //   attribute: 'video-controls', prefix: 'src:#video-' + vidId},
+      //   attribute: 'video-controls', prefix: 'src:#video-' + id},
       video_title: {
+        attribute: 'bmfont-text', 
+        prefix: 'text: ', 
+        data: 'title'
+      },
+      video_title2: {
         attribute: 'bmfont-text', 
         prefix: 'text: ', 
         data: 'title'
@@ -55,7 +55,7 @@ $(function() {
       video_desc: {
         attribute: 'bmfont-text', 
         prefix: 'text: ', 
-        data: 'description'
+        data: 'desc'
       },
       video_pub: {
         attribute: 'bmfont-text', 
@@ -65,21 +65,29 @@ $(function() {
     };
   }
 
-  function updateElements(elements, video) {
+  function setElements(elements, video) {
     // Loop through list and swap all the attributes.
     $.each(elements, function(key, value) {
-      var selector = key.replace('_', '-');
+      var selector = '#' + key.replace('_', '-');
       var newVal = (value.data) ? video[0].dataset[value.data] : '';
-      d3.select('#' + selector).attr(value.attribute, value.prefix + newVal);
+      if (selector === 'video-controller') {
+        console.log($(selector));
+      }
+      else {
+        d3.select(selector).attr(value.attribute, value.prefix + newVal);
+      } 
     });
   }
 
   function playVideo(selector) {
-    //$('#video-controller').attr('video-controls', 'src:' + selector);
     $(selector).each(function () {
       this.currentTime = 0; 
-      this.play() 
+      this.play();
+      // Create EventListener for when the video ends.
+      this.addEventListener('ended', nextVideo, false);
     });
+
+    setTimeout(fadeUI, 2000);
   }
 
   function stopVideo(selector) {
@@ -87,6 +95,42 @@ $(function() {
       this.pause() 
     });
   }
+
+  function nextVideo(e) {
+    var current = e.target.dataset.videoId;
+    var next = ++current;
+    
+    // aframe-video-controls does not do well when swapping attributes on the fly.
+    // var controller = $('#video-controller');
+    // $('#video-controller').remove();
+    // controller.attr('video-controls', 'src:#video-' + next);
+    // $('#video-player').after(controller);
+
+    initPlayer(next);
+  }
+
+  function fadeUI() {
+    boxes.transition()
+      .duration(1000)
+      .attr('opacity', light);
+  }
+
+  function focusUI() {
+    boxes.transition()
+      .duration(1000)
+      .attr('opacity', dark);
+  }
+
+  function initPlayer(id = 0) {
+    var video = $('#video-' + id);
+    var elements = getElements(id);
+
+    setElements(elements, video);
+    playVideo(video);
+  }
+
+  // Give the page time to load before streaming video and audio
+  setTimeout(initPlayer, 3000);
 });
 
 
