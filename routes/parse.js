@@ -66,7 +66,7 @@ router.get('/', function(req, res, next) {
                                         break;
 
                                     default:
-                                        video[name] = (meta.content) ? meta.content : 'INVALID OR EMPTY DATA';
+                                        video[name] = meta.content;
                                 }
                             }
                         });
