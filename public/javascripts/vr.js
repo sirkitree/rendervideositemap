@@ -20,15 +20,14 @@ $(function() {
   });
 
   // When user clicks on a video preview we swap out assets
-  document.querySelectorAll('.video-preview').forEach(function() {
-    $(this).click(function(e) {
+  document.querySelectorAll('.video-preview').forEach(function(el) {
+    $(el).click(function(e) {
       var target = e.target;
       var vidId = $(target).data('video-id');
 
       // Make sure valid element was clicked
       if (vidId > -1) {
         var vidData = $('#video-' + vidId);
-        console.log(vidData[0].dataset.title);
         var swap = {
           video_player: {
             attribute: 'src', prefix: '#video-' + vidId},
