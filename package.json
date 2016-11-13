@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "npm start"
   },
   "dependencies": {
     "aframe": "^0.3.2",
