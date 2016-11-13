@@ -39,7 +39,7 @@ $(function() {
           video_desc: {
             attribute: 'bmfont-text', prefix: 'text: ', data: 'description'},
           video_pub: {
-            attribute: 'bmfont-text', prefix: 'text: ', data: 'pubdate'},
+            attribute: 'bmfont-text', prefix: 'text: Published on ', data: 'pubdate'},
           };
         $.each(swap, function(key, value) {
           var selector = key.replace('_', '-');

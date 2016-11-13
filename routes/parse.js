@@ -3,6 +3,7 @@ var router = express.Router();
 //var fs = require('fs');
 var parse = require('xml-parser');
 var request = require('request');
+var moment = require('moment');
 
 // Tiem to start assembling data to send to parse.jade template
 router.get('/', function(req, res, next) {
@@ -44,8 +45,14 @@ router.get('/', function(req, res, next) {
                             // to match the fields above.
                             var name = meta.name.replace('video:', '');
                             if (fields.indexOf(name) != -1) {
-                                // Append attribute to current video record
-                                video[name] = meta.content;
+                                if (name == 'publication_date') {
+                                    var date = moment(meta.content).format('MMM DD, YYYY');
+                                    video[name] = date;
+                                }
+                                else {
+                                    // Append attribute to current video record
+                                    video[name] = meta.content;
+                                }
                             }
                         });
 
