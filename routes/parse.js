@@ -52,15 +52,21 @@ router.get('/', function(req, res, next) {
                             // to match the fields above.
                             var name = meta.name.replace('video:', '');
                             if (fields.indexOf(name) != -1) {
-                                if (name == 'publication_date') {
-                                    // Make the date be human readable.
-                                    var date = moment(meta.content).format('MMM DD, YYYY');
-                                    video[name] = date;
-                                }
-                                else {
-                                    // Append attribute to current video record
-                                    // Some data is ugly and needs to be cleaned up.              
-                                    video[name] = striptags(htmlent.decode(xmlent.decode(meta.content)));
+                                switch(name) {
+                                    case 'publication_date':
+                                        // Make the date be human readable.
+                                        video[name]= moment(meta.content).format('MMM DD, YYYY');
+                                        break;
+
+                                    case 'title':
+                                    case 'description':
+                                        // Append attribute to current video record
+                                        // Some data is ugly and needs to be cleaned up.              
+                                        video[name] = striptags(htmlent.decode(xmlent.decode(meta.content)));
+                                        break;
+
+                                    default:
+                                        video[name] = (meta.content) ? meta.content : 'INVALID OR EMPTY DATA';
                                 }
                             }
                         });
