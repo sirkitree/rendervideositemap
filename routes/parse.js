@@ -4,6 +4,13 @@ var router = express.Router();
 var parse = require('xml-parser');
 var request = require('request');
 var moment = require('moment');
+var utf8 = require('utf8');
+var Entities = require('html-entities').XmlEntities;
+var AllHtmlEntities = require('html-entities').AllHtmlEntities;
+var striptags = require('striptags');
+
+xmlent = new Entities();
+htmlent = new AllHtmlEntities();
 
 // Tiem to start assembling data to send to parse.jade template
 router.get('/', function(req, res, next) {
@@ -46,12 +53,14 @@ router.get('/', function(req, res, next) {
                             var name = meta.name.replace('video:', '');
                             if (fields.indexOf(name) != -1) {
                                 if (name == 'publication_date') {
+                                    // Make the date be human readable.
                                     var date = moment(meta.content).format('MMM DD, YYYY');
                                     video[name] = date;
                                 }
                                 else {
                                     // Append attribute to current video record
-                                    video[name] = meta.content;
+                                    // Some data is ugly and needs to be cleaned up.              
+                                    video[name] = striptags(htmlent.decode(xmlent.decode(meta.content)));
                                 }
                             }
                         });
